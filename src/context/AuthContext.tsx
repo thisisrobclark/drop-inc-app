@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { Session, User } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { Profile } from '../lib/types'
+import { useDemo } from './DemoContext'
 
 interface AuthState {
   session: Session | null
@@ -20,6 +21,7 @@ interface AuthState {
 const AuthContext = createContext<AuthState | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { isDemoMode, getDemoUser, getDemoProfile, getDemoSession, exitDemo } = useDemo()
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
@@ -35,6 +37,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    // Skip Supabase auth in demo mode
+    if (isDemoMode) {
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
@@ -50,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [isDemoMode])
 
   const signUp = async (email: string, password: string, meta: Partial<Profile>) => {
     const { data, error } = await supabase.auth.signUp({ email, password })
@@ -78,6 +86,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signOut = async () => {
+    if (isDemoMode) {
+      exitDemo()
+      return
+    }
     await supabase.auth.signOut()
     setProfile(null)
   }
@@ -95,6 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const updateProfile = async (data: Partial<Profile>) => {
+    if (isDemoMode) return { error: 'Profile editing disabled in demo mode' }
     if (!user) return { error: 'Not authenticated' }
     const { error } = await supabase
       .from('profiles')
@@ -106,18 +119,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const refreshProfile = async () => {
+    if (isDemoMode) return
     if (user) await fetchProfile(user.id)
   }
 
-  return (
-    <AuthContext.Provider
-      value={{
+  // In demo mode, return mock data
+  const value: AuthState = isDemoMode
+    ? {
+        session: getDemoSession(),
+        user: getDemoUser(),
+        profile: getDemoProfile(),
+        loading: false,
+        signUp,
+        signIn,
+        signOut,
+        sendPhoneOtp,
+        verifyPhoneOtp,
+        updateProfile,
+        refreshProfile,
+      }
+    : {
         session, user, profile, loading,
         signUp, signIn, signOut,
         sendPhoneOtp, verifyPhoneOtp,
         updateProfile, refreshProfile,
-      }}
-    >
+      }
+
+  return (
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   )

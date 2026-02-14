@@ -3,10 +3,12 @@ import { Link, Navigate } from 'react-router-dom'
 import { LayoutDashboard, ChevronRight, Search, Filter } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
+import { useDemo } from '../../context/DemoContext'
 import { Order, ORDER_STEPS, OrderStatus } from '../../lib/types'
 
 export default function AdminDashboard() {
   const { profile } = useAuth()
+  const { isDemoMode, demoOrders } = useDemo()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -15,8 +17,13 @@ export default function AdminDashboard() {
   if (profile && !profile.is_admin) return <Navigate to="/catalog" replace />
 
   useEffect(() => {
+    if (isDemoMode) {
+      setOrders(demoOrders)
+      setLoading(false)
+      return
+    }
     fetchOrders()
-  }, [])
+  }, [isDemoMode, demoOrders])
 
   const fetchOrders = async () => {
     const { data } = await supabase

@@ -2,6 +2,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 import { Product, CartItem } from '../lib/types'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './AuthContext'
+import { useDemo } from './DemoContext'
 
 interface CartState {
   items: CartItem[]
@@ -18,6 +19,7 @@ const CartContext = createContext<CartState | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const { user } = useAuth()
+  const { isDemoMode, addDemoOrder } = useDemo()
 
   const addToCart = (product: Product, qty: number) => {
     setItems((prev) => {
@@ -52,6 +54,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const submitOrder = async (notes?: string) => {
     if (!user) return { orderId: null, error: 'Not authenticated' }
     if (items.length === 0) return { orderId: null, error: 'Cart is empty' }
+
+    // Demo mode: in-memory order
+    if (isDemoMode) {
+      const orderItems = items.map((i) => ({
+        id: `demo-ci-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        order_id: '',
+        product_id: i.product.id,
+        product_name: i.product.name,
+        product_category: i.product.category,
+        quantity: i.quantity,
+        unit: i.product.unit,
+      }))
+      const order = addDemoOrder(user.id, orderItems)
+      clearCart()
+      return { orderId: order.id, error: null }
+    }
 
     const { data: order, error: orderError } = await supabase
       .from('orders')

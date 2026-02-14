@@ -3,11 +3,13 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { ArrowLeft, Save, Package, User, MapPin, Truck, MessageSquare } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
+import { useDemo } from '../../context/DemoContext'
 import { Order, OrderTracking, ORDER_STEPS } from '../../lib/types'
 
 export default function AdminOrderDetail() {
   const { orderId } = useParams()
   const { profile } = useAuth()
+  const { isDemoMode, demoOrders, updateDemoTracking } = useDemo()
   const [order, setOrder] = useState<Order | null>(null)
   const [tracking, setTracking] = useState<OrderTracking[]>([])
   const [loading, setLoading] = useState(true)
@@ -18,8 +20,19 @@ export default function AdminOrderDetail() {
 
   useEffect(() => {
     if (!orderId) return
+
+    if (isDemoMode) {
+      const found = demoOrders.find(o => o.id === orderId)
+      if (found) {
+        setOrder(found)
+        setTracking(found.order_tracking || [])
+      }
+      setLoading(false)
+      return
+    }
+
     fetchOrder()
-  }, [orderId])
+  }, [orderId, isDemoMode, demoOrders])
 
   const fetchOrder = async () => {
     const { data } = await supabase
@@ -76,7 +89,18 @@ export default function AdminOrderDetail() {
       return last
     }, 'received')
 
-    // Update each tracking row
+    if (isDemoMode) {
+      // Persist to demo context
+      if (orderId) {
+        updateDemoTracking(orderId, tracking)
+      }
+      setSaving(false)
+      setSaveMsg('Saved!')
+      setTimeout(() => setSaveMsg(''), 2000)
+      return
+    }
+
+    // Update each tracking row in Supabase
     for (const track of tracking) {
       await supabase
         .from('order_tracking')

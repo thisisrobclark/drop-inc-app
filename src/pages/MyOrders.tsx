@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react'
 import { ClipboardList, Package, ChevronRight } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { useDemo } from '../context/DemoContext'
 import { Order, ORDER_STEPS } from '../lib/types'
 
 export default function MyOrders() {
   const { user } = useAuth()
+  const { isDemoMode, demoOrders } = useDemo()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) return
+
+    if (isDemoMode) {
+      setOrders(demoOrders.filter(o => o.user_id === user.id))
+      setLoading(false)
+      return
+    }
+
     supabase
       .from('orders')
       .select('*, order_items(*), order_tracking(*)')
@@ -21,7 +30,7 @@ export default function MyOrders() {
         setOrders(data || [])
         setLoading(false)
       })
-  }, [user])
+  }, [user, isDemoMode, demoOrders])
 
   if (loading) {
     return (
