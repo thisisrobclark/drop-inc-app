@@ -61,21 +61,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [isDemoMode])
 
   const signUp = async (email: string, password: string, meta: Partial<Profile>) => {
-    const { data, error } = await supabase.auth.signUp({ email, password })
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: meta.full_name || '',
+          farm_name: meta.farm_name || '',
+          phone: meta.phone || '',
+          physical_address: meta.physical_address || '',
+          mailing_address: meta.mailing_address || '',
+          delivery_directions: meta.delivery_directions || '',
+        },
+      },
+    })
     if (error) return { error: error.message }
-    if (data.user) {
-      const { error: profileError } = await supabase.from('profiles').upsert({
-        id: data.user.id,
-        email,
-        full_name: meta.full_name || '',
-        farm_name: meta.farm_name || '',
-        phone: meta.phone || '',
-        physical_address: meta.physical_address || '',
-        mailing_address: meta.mailing_address || '',
-        delivery_directions: meta.delivery_directions || '',
-      })
-      if (profileError) return { error: profileError.message }
-    }
     return { error: null }
   }
 
