@@ -3,7 +3,7 @@ import { fallbackProducts } from '../data/products'
 
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID
 const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY
-const RANGE = 'Sheet1!A2:E200'
+const RANGE = 'products!A2:E200'
 
 interface SheetRow {
   id: string
