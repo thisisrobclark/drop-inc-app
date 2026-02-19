@@ -24,7 +24,7 @@ export const DEMO_PARTNER_USER = {
 
 export const DEMO_ADMIN_USER = {
   id: 'demo-admin-001',
-  email: 'admin@dropinc.ca',
+  email: 'admin@cropshield.ca',
   aud: 'authenticated',
   role: 'authenticated',
   created_at: '2024-01-01T00:00:00Z',
@@ -49,9 +49,9 @@ export const DEMO_PARTNER_PROFILE: Profile = {
 
 export const DEMO_ADMIN_PROFILE: Profile = {
   id: 'demo-admin-001',
-  email: 'admin@dropinc.ca',
-  full_name: 'Drop Inc. Admin',
-  farm_name: 'Drop Inc.',
+  email: 'admin@cropshield.ca',
+  full_name: 'CropShield Admin',
+  farm_name: 'CropShield Chemicals Ltd',
   phone: '306-555-0100',
   physical_address: 'Saskatoon, SK',
   mailing_address: 'Saskatoon, SK',

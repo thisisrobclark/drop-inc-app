@@ -37,7 +37,7 @@ export default function Login() {
           <div className="w-14 h-14 bg-lime-500/10 rounded-2xl flex items-center justify-center mb-4">
             <Leaf className="w-8 h-8 text-lime-500" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-100">Drop Inc</h1>
+          <h1 className="text-2xl font-bold text-gray-100">CropShield</h1>
           <p className="text-sm text-gray-500 mt-1">Agricultural Input Ordering</p>
         </div>
 

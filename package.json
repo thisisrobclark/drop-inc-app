@@ -1,5 +1,5 @@
 {
-  "name": "drop-inc-app",
+  "name": "cropshield-app",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "cap:init": "cap init 'Drop Inc' com.dropinc.app --web-dir dist",
+    "cap:init": "cap init 'CropShield' com.cropshield.app --web-dir dist",
     "cap:add:ios": "cap add ios",
     "cap:add:android": "cap add android",
     "cap:sync": "cap sync",

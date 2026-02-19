@@ -26,7 +26,7 @@ export default function Navbar() {
       <nav className="hidden md:flex items-center justify-between px-6 py-4 border-b border-dark-border safe-top bg-dark-card/80 backdrop-blur-md sticky top-0 z-50">
         <Link to="/catalog" className="flex items-center gap-2">
           <Leaf className="w-7 h-7 text-lime-500" />
-          <span className="text-xl font-bold text-gray-100">Drop Inc</span>
+          <span className="text-xl font-bold text-gray-100">CropShield</span>
         </Link>
 
         <div className="flex items-center gap-1">
