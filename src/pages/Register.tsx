@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Leaf, Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react'
+import { Eye, EyeOff, ChevronDown, ChevronUp } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 export default function Register() {
@@ -58,9 +58,7 @@ export default function Register() {
     <div className="min-h-screen bg-dark flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
-          <div className="w-12 h-12 bg-lime-500/10 rounded-2xl flex items-center justify-center mb-3">
-            <Leaf className="w-7 h-7 text-lime-500" />
-          </div>
+          <img src="/cropshield-logo.png" alt="CropShield" className="w-16 h-16 object-contain mb-1" />
           <h1 className="text-xl font-bold text-gray-100">Create Account</h1>
           <p className="text-sm text-gray-500 mt-1">Register your farm for ordering</p>
         </div>
@@ -170,7 +168,7 @@ export default function Register() {
               type="checkbox"
               checked={sameAddress}
               onChange={(e) => setSameAddress(e.target.checked)}
-              className="w-4 h-4 rounded border-dark-border bg-dark-surface text-lime-500 focus:ring-lime-500/20"
+              className="w-4 h-4 rounded border-dark-border bg-dark-surface text-brand-400 focus:ring-brand-400/20"
             />
             <span className="text-xs text-gray-400">Mailing address same as physical</span>
           </label>
@@ -209,14 +207,14 @@ export default function Register() {
             </div>
           )}
 
-          <button type="submit" disabled={loading} className="btn-lime w-full mt-2">
+          <button type="submit" disabled={loading} className="btn-brand w-full mt-2">
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-5">
           Already have an account?{' '}
-          <Link to="/login" className="text-lime-500 hover:text-lime-400 font-medium">
+          <Link to="/login" className="text-brand-400 hover:text-brand-300 font-medium">
             Sign In
           </Link>
         </p>

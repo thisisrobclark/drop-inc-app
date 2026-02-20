@@ -54,8 +54,8 @@ export default function Verify2FA() {
     <div className="min-h-screen bg-dark flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 bg-lime-500/10 rounded-2xl flex items-center justify-center mb-4">
-            <Shield className="w-8 h-8 text-lime-500" />
+          <div className="w-14 h-14 bg-brand-400/10 rounded-2xl flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-brand-400" />
           </div>
           <h1 className="text-xl font-bold text-gray-100">Phone Verification</h1>
           <p className="text-sm text-gray-500 mt-1">
@@ -83,7 +83,7 @@ export default function Verify2FA() {
                 placeholder="+1 (306) 555-0123"
               />
             </div>
-            <button onClick={handleSend} disabled={loading} className="btn-lime w-full">
+            <button onClick={handleSend} disabled={loading} className="btn-brand w-full">
               {loading ? 'Sending...' : 'Send Verification Code'}
             </button>
             <button
@@ -108,7 +108,7 @@ export default function Verify2FA() {
                 autoFocus
               />
             </div>
-            <button type="submit" disabled={loading} className="btn-lime w-full">
+            <button type="submit" disabled={loading} className="btn-brand w-full">
               {loading ? 'Verifying...' : 'Verify & Continue'}
             </button>
             <button

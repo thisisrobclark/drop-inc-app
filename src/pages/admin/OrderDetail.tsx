@@ -127,7 +127,7 @@ export default function AdminOrderDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-lime-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -136,7 +136,7 @@ export default function AdminOrderDetail() {
     return (
       <div className="text-center py-20">
         <p className="text-gray-400">Order not found</p>
-        <Link to="/admin" className="text-lime-500 text-sm mt-2 inline-block">Back to dashboard</Link>
+        <Link to="/admin" className="text-brand-400 text-sm mt-2 inline-block">Back to dashboard</Link>
       </div>
     )
   }
@@ -165,7 +165,7 @@ export default function AdminOrderDetail() {
       {/* Customer info */}
       <div className="card space-y-3">
         <h3 className="text-sm font-semibold text-gray-300 flex items-center gap-2">
-          <User className="w-4 h-4 text-lime-500" />
+          <User className="w-4 h-4 text-brand-400" />
           Customer
         </h3>
         <div className="grid grid-cols-2 gap-3 text-sm">
@@ -207,7 +207,7 @@ export default function AdminOrderDetail() {
       {/* Order items */}
       <div className="card">
         <h3 className="text-sm font-semibold text-gray-300 flex items-center gap-2 mb-3">
-          <Package className="w-4 h-4 text-lime-500" />
+          <Package className="w-4 h-4 text-brand-400" />
           Items ({order.order_items?.length || 0})
         </h3>
         <div className="space-y-2">
@@ -248,10 +248,10 @@ export default function AdminOrderDetail() {
                     type="checkbox"
                     checked={track.completed}
                     onChange={() => toggleStep(step.key)}
-                    className="w-5 h-5 rounded border-dark-border bg-dark-surface text-lime-500
-                               focus:ring-lime-500/20 cursor-pointer"
+                    className="w-5 h-5 rounded border-dark-border bg-dark-surface text-brand-400
+                               focus:ring-brand-400/20 cursor-pointer"
                   />
-                  <span className={`font-medium text-sm ${track.completed ? 'text-lime-400' : 'text-gray-400'}`}>
+                  <span className={`font-medium text-sm ${track.completed ? 'text-brand-400' : 'text-gray-400'}`}>
                     {step.label}
                   </span>
                 </label>
@@ -262,7 +262,7 @@ export default function AdminOrderDetail() {
                     value={track.completed_at ? track.completed_at.slice(0, 10) : ''}
                     onChange={(e) => updateStepDate(step.key, e.target.value)}
                     className="bg-dark-surface border border-dark-border rounded-lg px-3 py-1.5
-                               text-xs text-gray-300 focus:outline-none focus:border-lime-500/50
+                               text-xs text-gray-300 focus:outline-none focus:border-brand-400/50
                                w-40"
                   />
                   <input
@@ -272,7 +272,7 @@ export default function AdminOrderDetail() {
                     onChange={(e) => updateStepNotes(step.key, e.target.value)}
                     className="flex-1 bg-dark-surface border border-dark-border rounded-lg px-3 py-1.5
                                text-xs text-gray-300 placeholder-gray-600
-                               focus:outline-none focus:border-lime-500/50"
+                               focus:outline-none focus:border-brand-400/50"
                   />
                 </div>
               </div>
@@ -284,12 +284,12 @@ export default function AdminOrderDetail() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="btn-lime flex items-center gap-2 text-sm"
+            className="btn-brand flex items-center gap-2 text-sm"
           >
             <Save className="w-4 h-4" />
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
-          {saveMsg && <span className="text-sm text-lime-400">{saveMsg}</span>}
+          {saveMsg && <span className="text-sm text-brand-400">{saveMsg}</span>}
         </div>
       </div>
     </div>

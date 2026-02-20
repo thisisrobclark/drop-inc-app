@@ -35,7 +35,7 @@ export default function MyOrders() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-lime-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -82,7 +82,7 @@ export default function MyOrders() {
                       <div
                         key={idx}
                         className={`w-2 h-2 rounded-full ${
-                          idx < completedSteps ? 'bg-lime-500' : 'bg-dark-border'
+                          idx < completedSteps ? 'bg-brand-400' : 'bg-dark-border'
                         }`}
                       />
                     ))}
@@ -104,7 +104,7 @@ export default function MyOrders() {
                           <div
                             className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
                               track?.completed
-                                ? 'bg-lime-500 text-dark'
+                                ? 'bg-brand-400 text-dark'
                                 : 'border border-dark-border'
                             }`}
                           >

@@ -30,7 +30,7 @@ export default function Cart() {
         <ShoppingCart className="w-12 h-12 mx-auto mb-4 text-gray-600" />
         <h2 className="text-lg font-semibold text-gray-300 mb-2">Cart is empty</h2>
         <p className="text-sm text-gray-500 mb-6">Add products from the catalog to get started</p>
-        <button onClick={() => navigate('/catalog')} className="btn-lime">
+        <button onClick={() => navigate('/catalog')} className="btn-brand">
           <ArrowLeft className="w-4 h-4 inline mr-2" />
           Browse Catalog
         </button>
@@ -90,7 +90,7 @@ export default function Cart() {
                         if (!isNaN(val)) updateQuantity(product.id, val)
                       }}
                       className="w-16 bg-dark-surface border border-dark-border rounded-lg px-2 py-1.5
-                                 text-sm text-center text-gray-100 focus:outline-none focus:border-lime-500/50"
+                                 text-sm text-center text-gray-100 focus:outline-none focus:border-brand-400/50"
                     />
                     <button
                       onClick={() => removeFromCart(product.id)}
@@ -124,7 +124,7 @@ export default function Cart() {
       <button
         onClick={handleSubmit}
         disabled={submitting}
-        className="btn-lime w-full flex items-center justify-center gap-2"
+        className="btn-brand w-full flex items-center justify-center gap-2"
       >
         <Send className="w-4 h-4" />
         {submitting ? 'Submitting Order...' : 'Submit Order'}

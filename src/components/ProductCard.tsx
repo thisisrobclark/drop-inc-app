@@ -28,7 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </h3>
           <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{product.description}</p>
         </div>
-        <span className="text-[10px] font-medium text-lime-500/70 bg-lime-500/10 px-2 py-0.5 rounded-md shrink-0 uppercase">
+        <span className="text-[10px] font-medium text-brand-400/70 bg-brand-400/10 px-2 py-0.5 rounded-md shrink-0 uppercase">
           {product.unit}
         </span>
       </div>
@@ -43,15 +43,15 @@ export default function ProductCard({ product }: { product: Product }) {
           onChange={(e) => setQty(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
           className="w-16 bg-dark-surface border border-dark-border rounded-lg px-2 py-1.5 text-sm text-center
-                     text-gray-100 placeholder-gray-600 focus:outline-none focus:border-lime-500/50
+                     text-gray-100 placeholder-gray-600 focus:outline-none focus:border-brand-400/50
                      transition-colors"
         />
         <button
           onClick={handleAdd}
           className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-sm font-semibold transition-all ${
             added
-              ? 'bg-lime-500/20 text-lime-400'
-              : 'bg-lime-500/10 text-lime-500 hover:bg-lime-500/20 active:bg-lime-500/30'
+              ? 'bg-brand-400/20 text-brand-400'
+              : 'bg-brand-400/10 text-brand-400 hover:bg-brand-400/20 active:bg-brand-400/30'
           }`}
         >
           {added ? (
@@ -69,7 +69,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {inCart && (
-        <p className="text-[10px] text-lime-500/60 text-center">
+        <p className="text-[10px] text-brand-400/60 text-center">
           {inCart.quantity} {product.unit} in cart
         </p>
       )}

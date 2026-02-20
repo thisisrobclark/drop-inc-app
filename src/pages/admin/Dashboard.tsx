@@ -53,7 +53,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-lime-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -61,7 +61,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-5">
       <div className="flex items-center gap-2">
-        <LayoutDashboard className="w-5 h-5 text-lime-500" />
+        <LayoutDashboard className="w-5 h-5 text-brand-400" />
         <h1 className="text-xl font-bold text-gray-100">Admin Dashboard</h1>
         <span className="text-xs text-gray-500 bg-dark-surface px-2 py-0.5 rounded-md">
           {orders.length} orders
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
             key={s.key}
             onClick={() => setStatusFilter(statusFilter === s.key ? 'all' : s.key)}
             className={`card py-3 px-3 text-center transition-colors cursor-pointer ${
-              statusFilter === s.key ? 'border-lime-500/40 bg-lime-500/5' : ''
+              statusFilter === s.key ? 'border-gold-500/40 bg-gold-500/5' : ''
             }`}
           >
             <p className="text-lg font-bold text-gray-100">{s.count}</p>
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
             <Link
               key={order.id}
               to={`/admin/orders/${order.id}`}
-              className="card flex items-center gap-4 hover:border-lime-500/20 transition-colors group"
+              className="card flex items-center gap-4 hover:border-brand-400/20 transition-colors group"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                     })}
                   </span>
                   <span>{itemCount} items</span>
-                  <span className="capitalize text-lime-500/70">{order.status}</span>
+                  <span className="capitalize text-gold-500/70">{order.status}</span>
                 </div>
               </div>
 
@@ -147,12 +147,12 @@ export default function AdminDashboard() {
                     <div
                       key={idx}
                       className={`w-1.5 h-4 rounded-sm ${
-                        idx < completedSteps ? 'bg-lime-500' : 'bg-dark-border'
+                        idx < completedSteps ? 'bg-brand-400' : 'bg-dark-border'
                       }`}
                     />
                   ))}
                 </div>
-                <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-lime-500 transition-colors" />
+                <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-brand-400 transition-colors" />
               </div>
             </Link>
           )

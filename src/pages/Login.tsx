@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Leaf, Eye, EyeOff, Play } from 'lucide-react'
+import { Eye, EyeOff, Play } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useDemo } from '../context/DemoContext'
 
@@ -34,9 +34,7 @@ export default function Login() {
     <div className="min-h-screen bg-dark flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 bg-lime-500/10 rounded-2xl flex items-center justify-center mb-4">
-            <Leaf className="w-8 h-8 text-lime-500" />
-          </div>
+          <img src="/cropshield-logo.png" alt="CropShield" className="w-20 h-20 object-contain mb-2" />
           <h1 className="text-2xl font-bold text-gray-100">CropShield</h1>
           <p className="text-sm text-gray-500 mt-1">Agricultural Input Ordering</p>
         </div>
@@ -81,14 +79,14 @@ export default function Login() {
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="btn-lime w-full">
+          <button type="submit" disabled={loading} className="btn-brand w-full">
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don't have an account?{' '}
-          <Link to="/register" className="text-lime-500 hover:text-lime-400 font-medium">
+          <Link to="/register" className="text-brand-400 hover:text-brand-300 font-medium">
             Register
           </Link>
         </p>
@@ -100,7 +98,7 @@ export default function Login() {
               enterDemo('partner')
               navigate('/catalog')
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-lime-500 rounded-xl text-sm font-bold text-lime-500 hover:bg-lime-500/10 transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-brand-400 rounded-xl text-sm font-bold text-brand-400 hover:bg-brand-400/10 transition-colors"
           >
             <Play className="w-4 h-4" />
             Try Partner Demo
@@ -110,7 +108,7 @@ export default function Login() {
               enterDemo('admin')
               navigate('/admin')
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-lime-500 rounded-xl text-sm font-bold text-lime-500 hover:bg-lime-500/10 transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-brand-400 rounded-xl text-sm font-bold text-brand-400 hover:bg-brand-400/10 transition-colors"
           >
             <Play className="w-4 h-4" />
             Try Admin Demo

@@ -38,7 +38,7 @@ export default function Catalog() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-lime-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -70,7 +70,7 @@ export default function Catalog() {
           onClick={() => setActiveCategory('all')}
           className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
             activeCategory === 'all'
-              ? 'bg-lime-500 text-dark'
+              ? 'bg-brand-800 text-white'
               : 'bg-dark-surface text-gray-400 hover:text-gray-200'
           }`}
         >
@@ -82,7 +82,7 @@ export default function Catalog() {
             onClick={() => setActiveCategory(cat)}
             className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
               activeCategory === cat
-                ? 'bg-lime-500 text-dark'
+                ? 'bg-brand-800 text-white'
                 : 'bg-dark-surface text-gray-400 hover:text-gray-200'
             }`}
           >
@@ -102,7 +102,7 @@ export default function Catalog() {
           {Object.entries(groupedByCategory).map(([category, items]) => (
             <div key={category}>
               <div className="flex items-center gap-2 mb-3">
-                <ChevronRight className="w-4 h-4 text-lime-500" />
+                <ChevronRight className="w-4 h-4 text-brand-400" />
                 <h2 className="text-sm font-semibold text-gray-300">{category}</h2>
                 <span className="text-[10px] text-gray-600">({items.length})</span>
               </div>
