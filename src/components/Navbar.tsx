@@ -25,7 +25,7 @@ export default function Navbar() {
       {/* Desktop nav */}
       <nav className="hidden md:flex items-center justify-between px-6 py-4 border-b border-dark-border safe-top bg-dark-card/80 backdrop-blur-md sticky top-0 z-50">
         <Link to="/catalog" className="flex items-center gap-2">
-          <img src="/cropshield-logo.png" alt="CropShield" className="w-8 h-8 object-contain" />
+          <img src="/cropshield-logo.png" alt="CropShield" className="h-10 object-contain" />
           <span className="text-xl font-bold text-gray-100">CropShield</span>
         </Link>
 

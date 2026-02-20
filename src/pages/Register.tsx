@@ -58,7 +58,7 @@ export default function Register() {
     <div className="min-h-screen bg-dark flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-6">
-          <img src="/cropshield-logo.png" alt="CropShield" className="w-16 h-16 object-contain mb-1" />
+          <img src="/cropshield-logo.png" alt="CropShield" className="w-36 object-contain mb-2" />
           <h1 className="text-xl font-bold text-gray-100">Create Account</h1>
           <p className="text-sm text-gray-500 mt-1">Register your farm for ordering</p>
         </div>

@@ -34,9 +34,8 @@ export default function Login() {
     <div className="min-h-screen bg-dark flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src="/cropshield-logo.png" alt="CropShield" className="w-20 h-20 object-contain mb-2" />
-          <h1 className="text-2xl font-bold text-gray-100">CropShield</h1>
-          <p className="text-sm text-gray-500 mt-1">Agricultural Input Ordering</p>
+          <img src="/cropshield-logo.png" alt="CropShield" className="w-48 object-contain mb-4" />
+          <p className="text-sm text-gray-500">Agricultural Input Ordering</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
