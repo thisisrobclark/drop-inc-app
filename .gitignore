@@ -3,6 +3,5 @@ dist
 .env
 .env.local
 *.local
-ios
-android
 .DS_Store
+app-icons

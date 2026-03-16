@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'com.dropinc.app',
-  appName: 'Drop Inc',
+  appId: 'com.cropshield.app',
+  appName: 'CropShield',
   webDir: 'dist',
   server: {
     androidScheme: 'https',
