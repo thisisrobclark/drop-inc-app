@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, Play } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
-import { useDemo } from '../context/DemoContext'
 
 export default function Login() {
   const { signIn } = useAuth()
-  const { enterDemo } = useDemo()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -90,29 +88,6 @@ export default function Login() {
           </Link>
         </p>
 
-        {/* Demo buttons */}
-        <div className="flex gap-3 mt-6">
-          <button
-            onClick={() => {
-              enterDemo('partner')
-              navigate('/catalog')
-            }}
-            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-brand-400 rounded-xl text-sm font-bold text-brand-400 hover:bg-brand-400/10 transition-colors"
-          >
-            <Play className="w-4 h-4" />
-            Try Partner Demo
-          </button>
-          <button
-            onClick={() => {
-              enterDemo('admin')
-              navigate('/admin')
-            }}
-            className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-brand-400 rounded-xl text-sm font-bold text-brand-400 hover:bg-brand-400/10 transition-colors"
-          >
-            <Play className="w-4 h-4" />
-            Try Admin Demo
-          </button>
-        </div>
       </div>
     </div>
   )
