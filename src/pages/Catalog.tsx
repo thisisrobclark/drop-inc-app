@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Search, ChevronRight, Package } from 'lucide-react'
 import { Product, CATEGORIES, ProductCategory } from '../lib/types'
-import { fetchProductsFromSheets } from '../lib/googleSheets'
+import { fetchProductsFromSheets, subscribeToProducts } from '../lib/googleSheets'
 import ProductCard from '../components/ProductCard'
 
 export default function Catalog() {
@@ -15,6 +15,7 @@ export default function Catalog() {
       setProducts(p)
       setLoading(false)
     })
+    return subscribeToProducts((p) => setProducts(p))
   }, [])
 
   const filtered = products.filter((p) => {
@@ -26,14 +27,18 @@ export default function Catalog() {
     return matchesSearch && matchesCategory
   })
 
-  const groupedByCategory = CATEGORIES.reduce(
-    (acc, cat) => {
-      const items = filtered.filter((p) => p.category === cat)
-      if (items.length > 0) acc[cat] = items
-      return acc
-    },
-    {} as Record<string, Product[]>
-  )
+  const groupedByCategory: Record<string, Product[]> = {}
+  for (const p of filtered) {
+    const key = (p.category && p.category.trim()) || 'Uncategorized'
+    if (!groupedByCategory[key]) groupedByCategory[key] = []
+    groupedByCategory[key].push(p)
+  }
+
+  const knownCategories = CATEGORIES.filter((c) => groupedByCategory[c])
+  const unknownCategories = Object.keys(groupedByCategory)
+    .filter((c) => !CATEGORIES.includes(c as ProductCategory))
+    .sort()
+  const orderedCategories = [...knownCategories, ...unknownCategories]
 
   if (loading) {
     return (
@@ -92,27 +97,30 @@ export default function Catalog() {
       </div>
 
       {/* Product grid */}
-      {Object.keys(groupedByCategory).length === 0 ? (
+      {orderedCategories.length === 0 ? (
         <div className="text-center py-16 text-gray-500">
           <Package className="w-10 h-10 mx-auto mb-3 opacity-50" />
           <p className="text-sm">No products found</p>
         </div>
       ) : (
         <div className="space-y-6">
-          {Object.entries(groupedByCategory).map(([category, items]) => (
-            <div key={category}>
-              <div className="flex items-center gap-2 mb-3">
-                <ChevronRight className="w-4 h-4 text-brand-400" />
-                <h2 className="text-sm font-semibold text-gray-300">{category}</h2>
-                <span className="text-[10px] text-gray-600">({items.length})</span>
+          {orderedCategories.map((category) => {
+            const items = groupedByCategory[category]
+            return (
+              <div key={category}>
+                <div className="flex items-center gap-2 mb-3">
+                  <ChevronRight className="w-4 h-4 text-brand-400" />
+                  <h2 className="text-sm font-semibold text-gray-300">{category}</h2>
+                  <span className="text-[10px] text-gray-600">({items.length})</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {items.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {items.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
