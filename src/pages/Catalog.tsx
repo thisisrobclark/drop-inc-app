@@ -2,9 +2,25 @@ import { useEffect, useState } from 'react'
 import { Search, ChevronRight, Package } from 'lucide-react'
 import { Product, CATEGORIES, ProductCategory } from '../lib/types'
 import { fetchProductsFromSheets, subscribeToProducts } from '../lib/googleSheets'
+import { useAuth } from '../context/AuthContext'
 import ProductCard from '../components/ProductCard'
 
+function logCatalogStats(products: Product[]) {
+  const uncategorized = products.filter((p) => !p.category || !p.category.trim()).length
+  const unknown = products.filter(
+    (p) =>
+      p.category &&
+      p.category.trim() &&
+      !CATEGORIES.includes(p.category.trim() as ProductCategory)
+  ).length
+  console.log(
+    `[catalog] loaded ${products.length} products from sheet · ` +
+      `${uncategorized} uncategorized · ${unknown} in unknown category`
+  )
+}
+
 export default function Catalog() {
+  const { profile } = useAuth()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -13,9 +29,13 @@ export default function Catalog() {
   useEffect(() => {
     fetchProductsFromSheets().then((p) => {
       setProducts(p)
+      logCatalogStats(p)
       setLoading(false)
     })
-    return subscribeToProducts((p) => setProducts(p))
+    return subscribeToProducts((p) => {
+      setProducts(p)
+      logCatalogStats(p)
+    })
   }, [])
 
   const filtered = products.filter((p) => {
@@ -48,6 +68,11 @@ export default function Catalog() {
     )
   }
 
+  const uncategorizedCount = groupedByCategory['Uncategorized']?.length ?? 0
+  const unknownCategoryCount = unknownCategories
+    .filter((c) => c !== 'Uncategorized')
+    .reduce((sum, c) => sum + (groupedByCategory[c]?.length ?? 0), 0)
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
@@ -56,6 +81,12 @@ export default function Catalog() {
           {products.length} products
         </span>
       </div>
+      {profile?.is_admin && (
+        <p className="text-[10px] text-gray-600 font-mono">
+          debug: {products.length} loaded · {filtered.length} rendered ·{' '}
+          {uncategorizedCount} uncategorized · {unknownCategoryCount} in unknown category
+        </p>
+      )}
 
       {/* Search */}
       <div className="relative">

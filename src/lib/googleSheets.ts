@@ -14,13 +14,15 @@ interface SheetRow {
 }
 
 function parseRow(row: string[]): SheetRow | null {
-  if (row.length < 4) return null
+  const id = row[0]?.trim() ?? ''
+  const name = row[1]?.trim() ?? ''
+  if (!id || !name) return null
   return {
-    id: row[0]?.trim(),
-    name: row[1]?.trim(),
-    category: row[2]?.trim(),
-    unit: row[3]?.trim(),
-    description: row[4]?.trim() || '',
+    id,
+    name,
+    category: row[2]?.trim() ?? '',
+    unit: row[3]?.trim() ?? '',
+    description: row[4]?.trim() ?? '',
   }
 }
 
