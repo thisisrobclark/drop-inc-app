@@ -8,6 +8,7 @@ export interface Product {
 
 export type ProductCategory =
   | 'Glyphosate'
+  | 'Glufosinate'
   | 'Pre-Emerge Herbicides'
   | 'Seed Treatment'
   | 'In-Crop Herbicides - Cereals'
@@ -15,11 +16,14 @@ export type ProductCategory =
   | 'In-Crop Herbicides - Pulses'
   | 'Fungicide'
   | 'Desiccant'
+  | 'Diquat'
   | 'Insecticide'
+  | 'Surfactant'
   | 'Water Conditioner'
 
 export const CATEGORIES: ProductCategory[] = [
   'Glyphosate',
+  'Glufosinate',
   'Pre-Emerge Herbicides',
   'Seed Treatment',
   'In-Crop Herbicides - Cereals',
@@ -27,7 +31,9 @@ export const CATEGORIES: ProductCategory[] = [
   'In-Crop Herbicides - Pulses',
   'Fungicide',
   'Desiccant',
+  'Diquat',
   'Insecticide',
+  'Surfactant',
   'Water Conditioner',
 ]
 

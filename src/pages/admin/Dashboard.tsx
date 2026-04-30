@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { LayoutDashboard, ChevronRight, Search, Filter } from 'lucide-react'
+import { LayoutDashboard, ChevronRight, Search, Filter, RefreshCw } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import { useDemo } from '../../context/DemoContext'
 import { Order, ORDER_STEPS, OrderStatus } from '../../lib/types'
+import { refreshProductsFromSheets } from '../../lib/googleSheets'
+
+type RefreshState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; count: number }
+  | { status: 'error'; message: string }
 
 export default function AdminDashboard() {
   const { profile } = useAuth()
@@ -13,6 +20,20 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all')
+  const [refreshState, setRefreshState] = useState<RefreshState>({ status: 'idle' })
+
+  const handleRefreshCatalog = async () => {
+    setRefreshState({ status: 'loading' })
+    try {
+      const products = await refreshProductsFromSheets()
+      setRefreshState({ status: 'success', count: products.length })
+    } catch (err) {
+      setRefreshState({
+        status: 'error',
+        message: err instanceof Error ? err.message : 'Refresh failed',
+      })
+    }
+  }
 
   if (profile && !profile.is_admin) return <Navigate to="/catalog" replace />
 
@@ -66,6 +87,26 @@ export default function AdminDashboard() {
         <span className="text-xs text-gray-500 bg-dark-surface px-2 py-0.5 rounded-md">
           {orders.length} orders
         </span>
+        <div className="ml-auto flex items-center gap-2">
+          {refreshState.status === 'success' && (
+            <span className="text-xs text-brand-400">
+              Catalog refreshed — {refreshState.count} products
+            </span>
+          )}
+          {refreshState.status === 'error' && (
+            <span className="text-xs text-red-400">Refresh failed: {refreshState.message}</span>
+          )}
+          <button
+            onClick={handleRefreshCatalog}
+            disabled={refreshState.status === 'loading'}
+            className="btn-outline text-xs px-3 py-1.5 flex items-center gap-1.5 disabled:opacity-50"
+          >
+            <RefreshCw
+              className={`w-3.5 h-3.5 ${refreshState.status === 'loading' ? 'animate-spin' : ''}`}
+            />
+            Refresh catalog
+          </button>
+        </div>
       </div>
 
       {/* Status summary cards */}
