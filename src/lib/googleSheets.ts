@@ -3,7 +3,7 @@ import { fallbackProducts } from '../data/products'
 
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID
 const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY
-const RANGE = 'products!A2:E200'
+const RANGE = 'products!A2:G200'
 
 interface SheetRow {
   id: string
@@ -15,15 +15,16 @@ interface SheetRow {
 
 function parseRow(row: string[]): SheetRow | null {
   const id = row[0]?.trim() ?? ''
-  const name = row[1]?.trim() ?? ''
+  const category = row[1]?.trim() ?? ''
+  const name = row[2]?.trim() ?? ''
   if (!id || !name) return null
-  return {
-    id,
-    name,
-    category: row[2]?.trim() ?? '',
-    unit: row[3]?.trim() ?? '',
-    description: row[4]?.trim() ?? '',
-  }
+  const branded = row[3]?.trim() ?? ''
+  const ingredients = row[4]?.trim() ?? ''
+  const unit = row[6]?.trim() ?? ''
+  const description = [branded ? `Like ${branded}` : '', ingredients]
+    .filter(Boolean)
+    .join(' • ')
+  return { id, name, category, unit, description }
 }
 
 let cachedProducts: Product[] | null = null
