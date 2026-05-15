@@ -29,6 +29,7 @@ create table public.profiles (
   mailing_address   text default '',
   delivery_directions text default '',
   is_admin      boolean default false,
+  is_shareholder boolean default false,
   created_at    timestamptz default now(),
   updated_at    timestamptz default now()
 );

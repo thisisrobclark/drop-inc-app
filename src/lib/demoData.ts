@@ -44,6 +44,7 @@ export const DEMO_PARTNER_PROFILE: Profile = {
   mailing_address: 'Box 204, Saskatoon, SK S7K 3J6',
   delivery_directions: 'Take Grid Road 732 south, farm is 2 miles past the co-op elevator. Yellow bins on the east side.',
   is_admin: false,
+  is_shareholder: true,
   created_at: '2024-11-15T09:00:00Z',
 }
 
@@ -57,6 +58,7 @@ export const DEMO_ADMIN_PROFILE: Profile = {
   mailing_address: 'Saskatoon, SK',
   delivery_directions: '',
   is_admin: true,
+  is_shareholder: true,
   created_at: '2024-01-01T00:00:00Z',
 }
 
@@ -70,6 +72,7 @@ const PARTNER_JAMES: Profile = {
   mailing_address: 'Box 88, Swift Current, SK S9H 3V5',
   delivery_directions: 'Follow the signs past the white church. Grain bins on the right.',
   is_admin: false,
+  is_shareholder: false,
   created_at: '2024-12-01T10:00:00Z',
 }
 
@@ -83,6 +86,7 @@ const PARTNER_EMILY: Profile = {
   mailing_address: 'Box 12, Rosthern, SK S0K 3R0',
   delivery_directions: '',
   is_admin: false,
+  is_shareholder: false,
   created_at: '2025-01-20T15:00:00Z',
 }
 

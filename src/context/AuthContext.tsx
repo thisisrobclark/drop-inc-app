@@ -14,9 +14,20 @@ interface AuthState {
   signOut: () => Promise<void>
   sendPhoneOtp: (phone: string) => Promise<{ error: string | null }>
   verifyPhoneOtp: (phone: string, token: string) => Promise<{ error: string | null }>
+  resetPassword: (email: string) => Promise<{ error: string | null }>
+  updatePassword: (newPassword: string) => Promise<{ error: string | null }>
   updateProfile: (data: Partial<Profile>) => Promise<{ error: string | null }>
   refreshProfile: () => Promise<void>
 }
+
+/**
+ * Where the Supabase password-reset email link should land users. Falls back to the deployed web app
+ * so the same flow works whether the email is opened on a phone or a desktop.
+ */
+const PASSWORD_RESET_REDIRECT =
+  (typeof window !== 'undefined' && window.location?.origin
+    ? `${window.location.origin}/reset-password`
+    : 'https://drop-inc-app.vercel.app/reset-password')
 
 const AuthContext = createContext<AuthState | undefined>(undefined)
 
@@ -106,6 +117,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null }
   }
 
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: PASSWORD_RESET_REDIRECT,
+    })
+    if (error) return { error: error.message }
+    return { error: null }
+  }
+
+  const updatePassword = async (newPassword: string) => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword })
+    if (error) return { error: error.message }
+    return { error: null }
+  }
+
   const updateProfile = async (data: Partial<Profile>) => {
     if (isDemoMode) return { error: 'Profile editing disabled in demo mode' }
     if (!user) return { error: 'Not authenticated' }
@@ -135,6 +160,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signOut,
         sendPhoneOtp,
         verifyPhoneOtp,
+        resetPassword,
+        updatePassword,
         updateProfile,
         refreshProfile,
       }
@@ -142,6 +169,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session, user, profile, loading,
         signUp, signIn, signOut,
         sendPhoneOtp, verifyPhoneOtp,
+        resetPassword, updatePassword,
         updateProfile, refreshProfile,
       }
 

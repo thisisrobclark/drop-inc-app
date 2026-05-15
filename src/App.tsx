@@ -6,6 +6,8 @@ import DemoBanner from './components/DemoBanner'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Verify2FA from './pages/Verify2FA'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import Catalog from './pages/Catalog'
 import Cart from './pages/Cart'
 import OrderConfirmation from './pages/OrderConfirmation'
@@ -31,6 +33,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-2fa" element={<Verify2FA />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
