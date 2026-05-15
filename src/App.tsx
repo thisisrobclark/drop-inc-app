@@ -14,6 +14,7 @@ import OrderConfirmation from './pages/OrderConfirmation'
 import MyOrders from './pages/MyOrders'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminOrderDetail from './pages/admin/OrderDetail'
+import AdminCustomers from './pages/admin/Customers'
 
 export default function App() {
   const { loading } = useAuth()
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/my-orders" element={<MyOrders />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/orders/:orderId" element={<AdminOrderDetail />} />
+            <Route path="/admin/customers" element={<AdminCustomers />} />
           </Route>
         </Route>
       </Routes>

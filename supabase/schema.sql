@@ -52,6 +52,10 @@ create policy "Admins can view all profiles"
   on public.profiles for select
   using (public.is_admin());
 
+create policy "Admins can update all profiles"
+  on public.profiles for update
+  using (public.is_admin());
+
 -- ══════════════════════════════════════════════════════
 -- ORDERS
 -- ══════════════════════════════════════════════════════
