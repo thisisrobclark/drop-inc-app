@@ -2,13 +2,18 @@ import { useState } from 'react'
 import { Plus, Check } from 'lucide-react'
 import { Product } from '../lib/types'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+import { tierForUser, summarizeTier } from '../lib/pricing'
 
 export default function ProductCard({ product }: { product: Product }) {
   const { items, addToCart } = useCart()
+  const { profile } = useAuth()
   const [qty, setQty] = useState('')
   const [added, setAdded] = useState(false)
 
   const inCart = items.find((i) => i.product.id === product.id)
+  const tier = tierForUser(product, profile)
+  const { headline, sub } = summarizeTier(tier)
 
   const handleAdd = () => {
     const n = parseInt(qty) || 1
@@ -32,6 +37,27 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.unit}
         </span>
       </div>
+
+      <div className="flex items-baseline justify-between gap-2 -mt-0.5">
+        <div className="flex items-baseline gap-1.5 min-w-0">
+          <span
+            className={`text-sm font-semibold truncate ${
+              tier.byRequest ? 'text-gray-400 italic' : 'text-brand-300'
+            }`}
+          >
+            {headline}
+          </span>
+          {!tier.byRequest && tier.unitPrice != null && (
+            <span className="text-[10px] text-gray-500 shrink-0">/ {product.unit}</span>
+          )}
+        </div>
+        {sub && <span className="text-[10px] text-gray-500 shrink-0">{sub}</span>}
+      </div>
+      {profile?.is_shareholder && !tier.byRequest && tier.unitPrice != null && (
+        <span className="text-[9px] uppercase tracking-wider text-brand-400/70 -mt-1">
+          Shareholder price
+        </span>
+      )}
 
       <div className="flex items-center gap-2 mt-auto pt-1">
         <input

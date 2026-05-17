@@ -1,9 +1,24 @@
+export interface PriceTier {
+  /** Per-unit price in dollars (null if unknown or quoted on request). */
+  unitPrice: number | null
+  /** Per-acre price in dollars (null if unknown). */
+  acrePrice: number | null
+  /** True if the sheet says "by request" for this tier — pricing is custom-quoted. */
+  byRequest: boolean
+}
+
 export interface Product {
   id: string
   name: string
   category: ProductCategory
   unit: string
   description: string
+  /** Pricing visible to CropShield shareholders (lower tier). */
+  shareholder: PriceTier
+  /** Pricing visible to non-shareholders (retail). */
+  retail: PriceTier
+  /** Acres covered per unit, if known. Useful for explaining per-acre price. */
+  acresPerUnit: number | null
 }
 
 export type ProductCategory =
@@ -52,6 +67,8 @@ export interface Profile {
   mailing_address: string
   delivery_directions: string
   is_admin: boolean
+  /** True if the user is a CropShield shareholder and should see the discounted price tier. */
+  is_shareholder: boolean
   created_at: string
 }
 

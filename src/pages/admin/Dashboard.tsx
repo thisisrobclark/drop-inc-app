@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { LayoutDashboard, ChevronRight, Search, Filter, RefreshCw } from 'lucide-react'
+import { LayoutDashboard, ChevronRight, Search, Filter, RefreshCw, Users } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import { useDemo } from '../../context/DemoContext'
@@ -96,6 +96,13 @@ export default function AdminDashboard() {
           {refreshState.status === 'error' && (
             <span className="text-xs text-red-400">Refresh failed: {refreshState.message}</span>
           )}
+          <Link
+            to="/admin/customers"
+            className="btn-outline text-xs px-3 py-1.5 flex items-center gap-1.5"
+          >
+            <Users className="w-3.5 h-3.5" />
+            Customers
+          </Link>
           <button
             onClick={handleRefreshCatalog}
             disabled={refreshState.status === 'loading'}

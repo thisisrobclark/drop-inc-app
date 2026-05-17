@@ -6,12 +6,15 @@ import DemoBanner from './components/DemoBanner'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Verify2FA from './pages/Verify2FA'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import Catalog from './pages/Catalog'
 import Cart from './pages/Cart'
 import OrderConfirmation from './pages/OrderConfirmation'
 import MyOrders from './pages/MyOrders'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminOrderDetail from './pages/admin/OrderDetail'
+import AdminCustomers from './pages/admin/Customers'
 
 export default function App() {
   const { loading } = useAuth()
@@ -31,6 +34,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-2fa" element={<Verify2FA />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
@@ -41,6 +46,7 @@ export default function App() {
             <Route path="/my-orders" element={<MyOrders />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/orders/:orderId" element={<AdminOrderDetail />} />
+            <Route path="/admin/customers" element={<AdminCustomers />} />
           </Route>
         </Route>
       </Routes>

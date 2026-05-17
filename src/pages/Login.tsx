@@ -79,6 +79,15 @@ export default function Login() {
           <button type="submit" disabled={loading} className="btn-brand w-full">
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
+
+          <p className="text-center text-xs text-gray-500 -mt-1">
+            <Link
+              to="/forgot-password"
+              className="text-brand-400 hover:text-brand-300 font-medium"
+            >
+              Forgot password?
+            </Link>
+          </p>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">

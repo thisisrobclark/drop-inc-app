@@ -1,6 +1,15 @@
-import { Product } from '../lib/types'
+import { Product, PriceTier } from '../lib/types'
 
-export const fallbackProducts: Product[] = [
+const NO_PRICE: PriceTier = { unitPrice: null, acrePrice: null, byRequest: false }
+
+/** Bare-bones product entry used in the hardcoded fallback list. Pricing is left empty. */
+type FallbackEntry = Pick<Product, 'id' | 'name' | 'category' | 'unit' | 'description'>
+
+function withEmptyPricing(entry: FallbackEntry): Product {
+  return { ...entry, shareholder: NO_PRICE, retail: NO_PRICE, acresPerUnit: null }
+}
+
+export const fallbackProducts: Product[] = ([
   // ── Glyphosate ──
   { id: 'gly-01', name: 'Roundup WeatherMAX', category: 'Glyphosate', unit: 'L', description: '540 g/L glyphosate potassium salt' },
   { id: 'gly-02', name: 'Credit Xtreme', category: 'Glyphosate', unit: 'L', description: '540 g/L glyphosate potassium salt' },
@@ -99,4 +108,4 @@ export const fallbackProducts: Product[] = [
   { id: 'wc-05', name: 'Merge', category: 'Water Conditioner', unit: 'L', description: 'Surfactant blend for wild oat herbicides' },
   { id: 'wc-06', name: 'Turbocharge', category: 'Water Conditioner', unit: 'L', description: 'Adjuvant/surfactant for Odyssey' },
   { id: 'wc-07', name: 'Gateway', category: 'Water Conditioner', unit: 'L', description: 'AMS replacement water conditioner' },
-]
+] as FallbackEntry[]).map(withEmptyPricing)

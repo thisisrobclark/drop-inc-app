@@ -29,6 +29,7 @@ create table public.profiles (
   mailing_address   text default '',
   delivery_directions text default '',
   is_admin      boolean default false,
+  is_shareholder boolean default false,
   created_at    timestamptz default now(),
   updated_at    timestamptz default now()
 );
@@ -49,6 +50,10 @@ create policy "Users can insert own profile"
 
 create policy "Admins can view all profiles"
   on public.profiles for select
+  using (public.is_admin());
+
+create policy "Admins can update all profiles"
+  on public.profiles for update
   using (public.is_admin());
 
 -- ══════════════════════════════════════════════════════
